@@ -50,8 +50,38 @@ header{
     height:290px;
     margin: 0 auto;
 }
+.carousel-extension{
+    width:60%;
+    margin: 0 auto; 
+    opacity: .8; 
+    background: black; 
+    height: 125px; 
+    border-bottom-left-radius: 30% 125px;
+    border-bottom-right-radius: 30% 125px;
+    overflow: hidden;
+}
+.carousel-extension .item{
+    width: 80%;
+    margin: 0 auto;
+}
+.carousel-extension .item p{
+    color: gray;
+    font-size: 25px;
+    padding: 5px 0;
+    text-align: center;
+}
 .main-container{
     padding:20px;
+}
+.links-list{
+    list-style-type: none;
+}
+.links-list li{
+    padding:5px 0;
+}
+.links-list a:hover{
+    color:graytext;
+    text-decoration: none;
 }
 footer{
     background:black;
