@@ -10,6 +10,7 @@ $params = require($configRoot.'/params.php');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Shalhevet: Reborn',
+        'theme'=>'classic',
 
 	// preloading 'log' component
 	'preload'=>array('log','bootstrap'),
