@@ -20,7 +20,6 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-                'application.lib.facebook.*',
 	),
 
 	'modules'=>array(
@@ -50,12 +49,13 @@ return array(
 			),
 		),
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
-			'charset' => 'utf8',
-		),
+                    'connectionString' => "mysql:host={$params['db.host']};dbname={$params['db.name']}",
+                            'username' => $params['db.username'],
+                            'password' => $params['db.password'],
+                            'charset' => 'utf8',
+                            'enableParamLogging' => YII_DEBUG,
+                            'emulatePrepare'=>true,
+                ),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
             'errorAction'=>'site/error',
