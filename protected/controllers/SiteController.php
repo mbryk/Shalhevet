@@ -27,9 +27,13 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+            $access_token = 'AAAG7lbaXRnwBADKlFjbuFd5yOrQ6AZB9ujIZBZBv0SWvkFP0ZAL9ZAFazXeitmlkbMkgCeSa6BY2A8Jf9E8DlBjUI46itubmgBWeTvMRPswmhztl9EeWN';            
+            $posts = $this->getPosts($access_token);		
+            $this->render('index',array(
+                'events'=>array(),
+                'news'=>array(),
+                'posts'=>$posts,
+                ));
 	}
 
 	/**
@@ -67,32 +71,6 @@ class SiteController extends Controller
 	}
 
 	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
-
-	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
 	public function actionLogout()
@@ -100,4 +78,30 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+        
+        private function getPosts($access_token)
+        {
+            $posts = array();
+            //$graph_url = "https://graph.facebook.com/nyu.shalhevet/posts?limit=3&access_token=".$access_token;
+            $graph_url = "https://graph.facebook.com/nyu.shalhevet/feed?access_token=".$access_token;
+            $page_feed = json_decode(file_get_contents($graph_url), true);
+            $page_posts = $page_feed['data'];
+            if($page_posts){
+            foreach($page_posts as $i=>$post){
+                if(isset($post['message']) && $post['from']['id']==100001615483216)
+                    array_push($posts, $post);
+            }
+            while(sizeof($posts)<5){
+                $graph_url = $page_feed['paging']['next'];
+                $page_feed = json_decode(file_get_contents($graph_url), true);
+                $page_more_posts = $page_feed['data'];
+                foreach($page_more_posts as $post){
+                    if(isset($post['message']) && ($post['from']['id']==100001615483216))
+                        array_push($posts,$post);
+                    if(sizeof($posts)==5) break;
+                }
+            }
+            }
+            return $posts;
+        }
 }

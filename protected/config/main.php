@@ -7,6 +7,7 @@
 // CWebApplication properties can be configured here.
 $configRoot=dirname(__FILE__);
 $params = require($configRoot.'/params.php');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Shalhevet: Reborn',
@@ -19,6 +20,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                'application.lib.facebook.*',
 	),
 
 	'modules'=>array(
@@ -73,9 +75,9 @@ return array(
 				*/
 			),
 		),
-            'bootstrap'=>array(
-                    'class'=>'application.extensions.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
-                ),
+             'bootstrap'=>array(
+                 'class'=>'bootstrap.components.Bootstrap',
+                 ),
 	),
 
 	// application-level parameters that can be accessed

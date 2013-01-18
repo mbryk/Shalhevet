@@ -1,8 +1,20 @@
+@font-face {
+    font-family: 'DaysRegular';
+    src: url('fonts/Days-webfont.eot');
+    src: url('fonts/Days-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/Days-webfont.woff') format('woff'),
+         url('fonts/Days-webfont.ttf') format('truetype'),
+         url('fonts/Days-webfont.svg#DaysRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html, body{
     height: 100%; width: 100%;
 }
 body{
-    background: url('http://www.wargachuk.com/wp-content/uploads/2011/11/background.jpg') repeat;
+    *background: url('http://www.wargachuk.com/wp-content/uploads/2011/11/background.jpg') repeat;
+    background: url('http://img.wallpaperstock.net:81/minimal-gray-to-white-gradient-wallpapers_33797_1920x1200.jpg') repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -14,12 +26,15 @@ body{
 }
 .container{
     width:1000px;
-    padding-bottom: 250px;
+}
+.navbar-inner{
+    border-radius:0;
 }
 header{
     height:100px;
     overflow-y: hidden;
 }
+.header-icon{height:100px}
 .social{
     position:absolute;
     right:30px;
@@ -50,6 +65,24 @@ header{
     height:290px;
     margin: 0 auto;
 }
+.carousel-inner .item div{
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    background: #006699;
+    border-radius: 10px;
+    opacity: .7;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+    padding: 15px 40px;
+}
+.carousel-inner .item div p{
+    color: white;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 14px;
+    text-align: center;
+}
 .carousel-extension{
     width:60%;
     margin: 0 auto; 
@@ -70,8 +103,21 @@ header{
     padding: 5px 0;
     text-align: center;
 }
+.carousel-extension2{
+    position:absolute
+}
 .main-container{
     padding:20px;
+}
+.main-block{
+    background-color: #F0EBF9;
+    padding: 0 0 10px 10px;
+    box-shadow: 1px 1px 4px gray;
+    border-radius: 10px;
+}
+.main-block h2{
+    font: 35px 'DaysRegular', Arial, sans-serif;
+    letter-spacing: 0;
 }
 .links-list{
     list-style-type: none;
@@ -79,9 +125,20 @@ header{
 .links-list li{
     padding:5px 0;
 }
+.links-list a{
+    color:#035a85;
+}
 .links-list a:hover{
     color:graytext;
     text-decoration: none;
+}
+.list-events a{
+    *font-size:15px
+}
+.list-events p{
+    font-size:11px;
+    margin:0;
+    margin-left:10px;
 }
 footer{
     background:black;
