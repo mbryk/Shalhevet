@@ -79,6 +79,7 @@ class AdminController extends Controller
             }
             }
             $posts = array_reverse($posts,true);
+            $count = 0;
             foreach($posts as $post){
                 if(!Posts::model()->findByAttributes(array(('post_id')=>$post['id']))){
                     $newPost = new Posts;
@@ -87,9 +88,10 @@ class AdminController extends Controller
                     $newPost->message = $post['message'];
                     $newPost->created_time = $post['created_time'];
                     $newPost->save();
+                    $count ++;
                 }
             }
-            switch(sizeof($posts)):
+            switch($count):
                 case 0:
                     $message = 'No Posts Added. Feed is up to date';
                     break;

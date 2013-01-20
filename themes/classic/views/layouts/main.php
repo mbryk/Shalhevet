@@ -20,19 +20,6 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="./assets/ico/favicon.ico">
-    <script type="text/javascript">
-        $(document).ready(function(){
-            
-            $('.next-btn').on('click', function(e) {
-                e.preventDefault();
-                $('.carousel').carousel('prev')
-            });
-            $('.prev-btn').on('click', function(e) {
-                e.preventDefault();
-                $('.carousel').carousel('next')
-            });
-        });        
-    </script>
   </head>
 
   <body>
@@ -75,7 +62,7 @@
                     array('label'=>'Update Events', 'url'=>'/admin/updateEvents', 'linkOptions'=>array('onClick'=>'return false;')),
                     array('label'=>'Update Feed', 'url'=>'/admin/updateFeed'),
                     array('label'=>'New News', 'url'=>'/admin/newNews'),
-                    array('label'=>'Update/Delete Items', 'url'=>'/admin/view'),
+                    array('label'=>'Delete Items', 'url'=>'/admin/view'),
                     array('label'=>'Logout', 'url'=>'/site/logout'),
                         )):''
             ),

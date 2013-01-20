@@ -1,16 +1,38 @@
 <?php if(Yii::app()->user->hasFlash('success')):?>
-<div class="alert alert-success" style="position:absolute; width:100%;">
+<div class="alert alert-success" style="position:absolute; width:100%;top:0">
     <button type="button" class="close" data-dismiss="alert">×</button>
     <p style="text-align:center"><?php echo Yii::app()->user->getFlash('success'); ?></p>
 </div>
-    <?php endif; ?>
 <?php
 Yii::app()->clientScript->registerScript(
    'myHideEffect',
    '$(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");',
    CClientScript::POS_READY
 );
+endif;
+Yii::app()->clientScript->registerScript(
+        'startCarousel',
+        '$(".carousel").carousel({interval: 3000});
+            $(".next-btn").on("click", function(e) {
+                e.preventDefault();
+                $(".carousel").carousel("prev")
+            });
+            $(".prev-btn").on("click", function(e) {
+                e.preventDefault();
+                $(".carousel").carousel("next")
+            });',
+        CClientScript::POS_READY);
+Yii::app()->clientScript->registerCss(
+        'fadeCarousel',
+        '.carousel .item {-webkit-transition: opacity 3s; -moz-transition: opacity 3s; -ms-transition: opacity 3s; -o-transition: opacity 3s; transition: opacity 3s;}
+.carousel .active.left {left:0;opacity:0;z-index:2;}
+.carousel .next {left:0;opacity:1;z-index:1;}
+.carousel .active.right {left:0;opacity:0;z-index:2;}
+.carousel .prev {left:0;opacity:1;z-index:1;}',
+        CClientScript::POS_HEAD
+        );
 ?>
+
 
 <div class="main-carousel">
               <div id="picCarousel" class="carousel slide">
@@ -40,27 +62,10 @@ Yii::app()->clientScript->registerScript(
           </div>
         </div>
       </div>
-      <a class="left carousel-control next-btn" href="#">&lsaquo;</a>
-      <a class="right carousel-control prev-btn" href="#">&rsaquo;</a>
+      <a class="left carousel-control next-btn" href="#" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control prev-btn" href="#" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
           </div>
-<!--        
-        <div class="carousel-extension">
-              <div id="textCarousel" class="carousel slide">
-                  <div class="item active">
-                      <p> * * Yom Haatzmaut parade * * </p>
-                      <p>January 30th</p>
-                      <p>Kimmel</p>
-                  </div>
-                  <div class="item">
-                      <p>Test 2</p>
-                  </div>
-                  <div class="item">
-                      <p>Test 3</p>
-                  </div>
-              </div>
-          </div>
--->
           <div class="main-container">
               <div class="row-fluid">
                   <div class="span1"></div>
