@@ -1,4 +1,18 @@
-          <div class="main-carousel">
+<?php if(Yii::app()->user->hasFlash('success')):?>
+<div class="alert alert-success" style="position:absolute; width:100%;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <p style="text-align:center"><?php echo Yii::app()->user->getFlash('success'); ?></p>
+</div>
+    <?php endif; ?>
+<?php
+Yii::app()->clientScript->registerScript(
+   'myHideEffect',
+   '$(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+   CClientScript::POS_READY
+);
+?>
+
+<div class="main-carousel">
               <div id="picCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
@@ -70,17 +84,13 @@
                   <div class="span4 main-block">
                       <h2>News</h2>
                       <ul class="links-list list-news">
-                      <?php foreach($news as $n_item):
-                          
-                      endforeach;?>
+                      <?php foreach($news as $n_item):?>
                           <li>
-                              <h4>Greetings from Budapest, Israel and Nicaragua!</h4> 
-                              <p>Bronfman Center Alternative Breaks are in full swing! Our next alternative break trip to leave is the Bridges: Muslim Jewish Interfaith Dialogue @ NYU trip to Joplin, MO. There they will be working with Rebuild Joplin to help rebuild homes. Keep checking our blog for updates on everyone's adventures.</p>
-                          </li>
-                          <li>
-                              <h4>Greetings from Budapest, Israel and Nicaragua!</h4> 
-                              <p>Bronfman Center Alternative Breaks are in full swing! Our next alternative break trip to leave is the Bridges: Muslim Jewish Interfaith Dialogue @ NYU trip to Joplin, MO. There they will be working with Rebuild Joplin to help rebuild homes. Keep checking our blog for updates on everyone's adventures.</p>
-                          </li>
+                              <h4 style="margin:0"><?php echo $n_item->title ?></h4> 
+                              <p style="text-align: right;font-size:11px; padding-right:10px; color:gray"><?php echo date('M j, ga', strtotime($n_item->date_created)); ?></p>
+                              <p><?php echo $n_item->content ?></p>
+                          </li>                          
+                      <?php endforeach;?>
                       </ul>
                   </div>
                   <div class="span3 main-block">
@@ -88,10 +98,10 @@
                       <ul class="links-list">
                           <?php foreach($posts as $post): ?>
                           <li>
-                              <a style="font-size: 11px" href="<?php echo $post['actions'][0]['link']?>" target="_blank">
-                                  <?php echo date('M j, ga', strtotime($post['created_time']));?>
+                              <a style="font-size: 11px" href="<?php echo $post->link ?>" target="_blank">
+                                  <?php echo date('M j, ga', strtotime($post->created_time));?>
                               </a>
-                              <p><?php echo $post['message'];?></p>
+                              <p><?php echo $post->message;?></p>
                           </li>
                           <?php endforeach;?>
                       </ul>

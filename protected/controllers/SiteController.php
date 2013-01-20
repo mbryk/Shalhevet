@@ -27,11 +27,15 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-            $access_token = 'AAAG7lbaXRnwBADKlFjbuFd5yOrQ6AZB9ujIZBZBv0SWvkFP0ZAL9ZAFazXeitmlkbMkgCeSa6BY2A8Jf9E8DlBjUI46itubmgBWeTvMRPswmhztl9EeWN';            
-            $posts = $this->getPosts($access_token);		
+            $criteria = new CDbCriteria();
+            $criteria->order = 'id DESC';
+            $criteria->limit = 5;
+            $posts = Posts::model()->findAll($criteria);
+            $criteria->limit = 3;
+            $news = News::model()->findAll($criteria);
             $this->render('index',array(
                 'events'=>array(),
-                'news'=>array(),
+                'news'=>$news,
                 'posts'=>$posts,
                 ));
 	}
@@ -78,30 +82,4 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-        
-        private function getPosts($access_token)
-        {
-            $posts = array();
-            //$graph_url = "https://graph.facebook.com/nyu.shalhevet/posts?limit=3&access_token=".$access_token;
-            $graph_url = "https://graph.facebook.com/nyu.shalhevet/feed?access_token=".$access_token;
-            $page_feed = json_decode(file_get_contents($graph_url), true);
-            $page_posts = $page_feed['data'];
-            if($page_posts){
-            foreach($page_posts as $i=>$post){
-                if(isset($post['message']) && $post['from']['id']==100001615483216)
-                    array_push($posts, $post);
-            }
-            while(sizeof($posts)<5){
-                $graph_url = $page_feed['paging']['next'];
-                $page_feed = json_decode(file_get_contents($graph_url), true);
-                $page_more_posts = $page_feed['data'];
-                foreach($page_more_posts as $post){
-                    if(isset($post['message']) && ($post['from']['id']==100001615483216))
-                        array_push($posts,$post);
-                    if(sizeof($posts)==5) break;
-                }
-            }
-            }
-            return $posts;
-        }
 }
