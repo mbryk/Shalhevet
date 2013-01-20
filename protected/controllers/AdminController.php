@@ -115,5 +115,92 @@ class AdminController extends Controller
             }
             $this->render('newNews', array('model'=>$item));
         }
+        
+        public function actionView(){
+            
+            $view = 'news';
+            if (isset($_GET['view']))
+                $view = $_GET['view'];
+            
+            switch($view):
+                case 'news':
+                    $model = new News('search');
+                    $model->unsetAttributes(); 
+                    if(isset($_GET['News'])){
+                        $model->attributes=$_GET['News'];
+                    }
+                    $dataProvider = new CActiveDataProvider('News', array(
+                        'sort'=>array('defaultOrder'=>'id ASC')
+                    ));
+                    break;
+                case 'events':
+                    break;
+                default:
+                    $model = new Posts('search');
+                    $model->unsetAttributes(); 
+                    if(isset($_GET['Posts'])){
+                        $model->attributes=$_GET['Posts'];
+                    }
+                    $dataProvider = new CActiveDataProvider('Posts', array(
+                        'sort'=>array('defaultOrder'=>'id ASC')
+                    ));
+                    break;
+            endswitch;
+                
+            $this->render('view',array('model'=>$model, 'view'=>$view,'dataProvider'=>$dataProvider));
+        }
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionUpdate($id,$model)
+	{
+            switch($model):
+                case 'news':
+                    $item = News::model()->findByPk($id);
+                    break;
+                case 'events':
+                    break;
+                case 'posts':
+                    $item = Posts::model()->findByPk($id);
+                    break;
+            endswitch;
+
+		if(isset($_POST['News']))
+		{
+			$model->attributes=$_POST['News'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionDelete($id,$model)
+	{
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			switch($model):
+                            case 'news':
+                                $item = News::model()->findByPk($id);
+                                break;
+                            case 'events':
+                                break;
+                            case 'posts':
+                                $item = Posts::model()->findByPk($id);
+                                break;
+                        endswitch;
+                        $item->delete();
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(array('admin/view'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
 
 }

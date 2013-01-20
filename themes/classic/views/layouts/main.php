@@ -74,7 +74,8 @@
                     array('label'=>'Admin', 'items'=>array(
                     array('label'=>'Update Events', 'url'=>'/admin/updateEvents', 'linkOptions'=>array('onClick'=>'return false;')),
                     array('label'=>'Update Feed', 'url'=>'/admin/updateFeed'),
-                    array('label'=>'New News', 'url'=>'/admin/newNews','linkOptions'=>array('target'=>'_blank')),
+                    array('label'=>'New News', 'url'=>'/admin/newNews'),
+                    array('label'=>'Update/Delete Items', 'url'=>'/admin/view'),
                     array('label'=>'Logout', 'url'=>'/site/logout'),
                         )):''
             ),
