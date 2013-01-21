@@ -52,6 +52,55 @@ class AdminController extends Controller
         
         public function actionUpdateEvents(){
             if(Yii::app()->user->isGuest) $this->redirect(Yii::app()->homeUrl);
+            
+            $token = User::model()->findByPk(1)->token;
+            $graph_url = "https://graph.facebook.com/nyu.shalhevet/events?".$token;
+            $page_feed = json_decode(file_get_contents($graph_url), true);
+            $events = $page_feed['data'];
+            if($events){
+                foreach($events as $i=>$event){
+                    if(Events::model()->findByAttributes(array(('event_id')=>$event['id']))) $found = 1;
+                }
+                array_reverse($events, true);
+                while(($found == 0)){
+                    if(!isset($page_feed['paging']['next'])) break;
+                    $graph_url = $page_feed['paging']['next'];
+                    $page_feed = json_decode(file_get_contents($graph_url), true);
+                    $more_events = $page_feed['data'];
+                    foreach($more_events as $event){
+                        if(Events::model()->findByAttributes(array(('event_id')=>$event['id']))) $found = 1;
+                        else array_push($events, $event);
+                    }                    
+                }
+                
+                $count = 0;
+                foreach($events as $event){
+                if(!Events::model()->findByAttributes(array(('event_id')=>$event['id']))){
+                    $newEvent = new Events;
+                    $newEvent->event_id = $event['id'];
+                    $newEvent->name = $event['name'];
+                    $newEvent->location = $event['location'];
+                    $newEvent->start_time = $event['start_time'];
+                    $newEvent->end_time = $event['end_time'];
+                    $newEvent->save();
+                    $count ++;
+                }
+            }
+            switch($count):
+                case 0:
+                    $message = 'No Events Added. Calendar is up to date';
+                    break;
+                case 1:
+                    $message = '1 Event Added!';
+                    break;
+                default:
+                    $message = $count.' Events Added!';
+                    break;
+            endswitch;
+            Yii::app()->user->setFlash('success', $message);
+            $this->redirect(Yii::app()->homeUrl);                
+                
+            }
         }
         
         public function actionUpdateFeed(){
@@ -68,6 +117,7 @@ class AdminController extends Controller
                     array_push($posts, $post);
             }
             while(sizeof($posts)<6){
+                if(!isset($page_feed['paging']['next'])) break;
                 $graph_url = $page_feed['paging']['next'];
                 $page_feed = json_decode(file_get_contents($graph_url), true);
                 $page_more_posts = $page_feed['data'];
@@ -99,7 +149,7 @@ class AdminController extends Controller
                     $message = '1 Post Added!';
                     break;
                 default:
-                    $message = sizeof($posts).' Posts Added!';
+                    $message = $count.' Posts Added!';
                     break;
             endswitch;
             Yii::app()->user->setFlash('success', $message);

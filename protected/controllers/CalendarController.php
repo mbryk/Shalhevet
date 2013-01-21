@@ -20,6 +20,17 @@ class CalendarController extends Controller
 
 	public function actionIndex()
 	{
+            $criteria = new CDbCriteria;
+            $now = new CDbExpression("NOW()");
+            $criteria->addCondition('start_time > '.$now); 
+            $events = Events::model()->findAll($criteria);
+            
+            foreach($events as $event){
+                $year = date('M j, ga', strtotime($n_item->date_created));
+                $js.= '{title: \''. $event->name.'\',start: new Date('.;
+            }
+
+            //{title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
             $this->render('index');
 	}
 
