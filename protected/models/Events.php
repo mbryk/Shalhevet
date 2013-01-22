@@ -85,4 +85,22 @@ class Events extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+ 
+        public function last($amount)
+        {
+            $this->getDbCriteria()->mergeWith(array(
+                'order' => 'start_time ASC',
+                'limit' => $amount,
+                ));
+            return $this;
+        } 
+        
+        public function since($timestamp = false)
+        {
+            if(!$timestamp)
+                $timestamp = time();
+            $now = new CDbExpression("NOW()");
+            $this->getDbCriteria()->addCondition('start_time > '.$now);
+            return $this;
+        }
 }

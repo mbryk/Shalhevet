@@ -119,6 +119,12 @@ header{
     font: 35px 'DaysRegular', Arial, sans-serif;
     letter-spacing: 0;
 }
+h2.title{
+    font: 45px 'DaysRegular', Arial, sans-serif;
+    letter-spacing: 0;
+    padding-bottom: 10px;
+    text-align: center;
+}
 .links-list{
     list-style-type: none;
 }

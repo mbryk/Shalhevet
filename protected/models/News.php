@@ -90,4 +90,13 @@ class News extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        
+        public function last($amount)
+        {
+            $this->getDbCriteria()->mergeWith(array(
+                'order' => 'id DESC',
+                'limit' => $amount,
+                ));
+            return $this;
+        }         
 }

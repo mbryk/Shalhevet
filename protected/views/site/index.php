@@ -72,18 +72,15 @@ Yii::app()->clientScript->registerCss(
                   <div class="span3 main-block">
                       <h2>Events</h2>
                       <ul class="links-list list-events">
+                          <?php foreach($events as $event):?>
                           <li>
-                              <h4><a href="/calendar/event/1">Young Alumni Shabbat Dinner</a></h4>
-                              <p>Meat Me</p>
-                              <p>Friday, January 25</p>
-                              <p>6:30 PM - Midnight</p>
+                              <h4><a href="/calendar/event/<?php echo $event->id ?>"><?php echo $event->name ?></a></h4>
+                              <p><?php echo $event->location ?></p>
+                              <p><?php echo date('M j', strtotime($event->start_time)) ?></p>
+                              <p><?php echo date('ga', strtotime($event->start_time));
+                                if($event->end_time) echo ' - '.date('ga', strtotime($event->end_time)); ?></p>
                           </li>
-                          <li>
-                              <h4><a href="/calendar/event/2">Young Alumni Shabbat Dinner 2</a></h4>
-                              <p>Meat Me</p>
-                              <p>Friday, January 25</p>
-                              <p>6:30 PM - Midnight</p>
-                          </li>
+                          <?php endforeach; ?>
                       </ul>
                   </div>
                   <div class="span4 main-block">

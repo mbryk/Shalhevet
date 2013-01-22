@@ -20,23 +20,20 @@ class CalendarController extends Controller
 
 	public function actionIndex()
 	{
-            $criteria = new CDbCriteria;
-            $now = new CDbExpression("NOW()");
-            $criteria->addCondition('start_time > '.$now); 
-            $events = Events::model()->findAll($criteria);
-            
+            $events = Events::model()->since()->findAll();
+            $js = '';
             foreach($events as $event){
-                $year = date('M j, ga', strtotime($n_item->date_created));
-                $js.= '{title: \''. $event->name.'\',start: new Date('.;
+                $js.= '{title: \''. htmlspecialchars($event->name,ENT_QUOTES).'\',start: new Date('.(strtotime($event->start_time) * 1000).'),';
+                if($event->end_time !== NULL) $js.='end: new Date('.(strtotime($event->end_time) * 1000).'),';
+                $js.= 'allDay:false,url: \'http://shalhevet.markbryk.in/calendar/event/'.$event->id.'\'},';
             }
 
-            //{title: 'Lunch',start: new Date(y, m, d, 12, 0),end: new Date(y, m, d, 14, 0),allDay: false},
-            $this->render('index');
+            $this->render('index',array('events'=>$js));
 	}
 
         public function actionEvent($id)
 	{
-            Events::model()->findByPk($id);
-            $this->render('event', array('event'=>$model));
+            $model = Events::model()->findByPk($id);
+            $this->render('event', array('model'=>$model));
 	}        
 }

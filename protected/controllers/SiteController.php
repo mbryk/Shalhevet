@@ -27,16 +27,11 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-            $criteria = new CDbCriteria();
-            $criteria->order = 'id DESC';
-            $criteria->limit = 5;
-            $posts = Posts::model()->findAll($criteria);
-            $criteria->limit = 3;
-            $news = News::model()->findAll($criteria);
+            
             $this->render('index',array(
-                'events'=>array(),
-                'news'=>$news,
-                'posts'=>$posts,
+                'events'=>Events::model()->since()->last(4)->findAll(),
+                'news'=>News::model()->last(3)->findAll(),
+                'posts'=>Posts::model()->last(4)->findAll(),
                 ));
 	}
 

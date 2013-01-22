@@ -480,8 +480,9 @@ class CDbCriteria extends CComponent
 				$this->condition="({$this->condition}) $and ({$criteria->condition})";
 		}
 
-		if($this->params!==$criteria->params)
+		if($this->params!==$criteria->params){
 			$this->params=array_merge($this->params,$criteria->params);
+                }
 
 		if($criteria->limit>0)
 			$this->limit=$criteria->limit;
