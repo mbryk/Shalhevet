@@ -69,7 +69,8 @@ Yii::app()->clientScript->registerCss(
           <div class="main-container">
               <div class="row-fluid">
                   <div class="span1"></div>
-                  <div class="span3 main-block">
+                  <div class="span3">
+                      <div class="main-block">
                       <h2>Events</h2>
                       <ul class="links-list list-events">
                           <?php foreach($events as $event):?>
@@ -82,8 +83,11 @@ Yii::app()->clientScript->registerCss(
                           </li>
                           <?php endforeach; ?>
                       </ul>
+                      </div>
+                      <div class="main-block-post"></div>
                   </div>
-                  <div class="span4 main-block">
+                  <div class="span4">
+                      <div class="main-block">
                       <h2>News</h2>
                       <ul class="links-list list-news">
                       <?php foreach($news as $n_item):?>
@@ -94,8 +98,11 @@ Yii::app()->clientScript->registerCss(
                           </li>                          
                       <?php endforeach;?>
                       </ul>
+                      </div>
+                      <div class="main-block-post"></div>
                   </div>
-                  <div class="span3 main-block">
+                  <div class="span3">
+                      <div class="main-block">
                       <h2>The Feed</h2>
                       <ul class="links-list">
                           <?php foreach($posts as $post): ?>
@@ -107,6 +114,8 @@ Yii::app()->clientScript->registerCss(
                           </li>
                           <?php endforeach;?>
                       </ul>
+                      </div>
+                      <div class="main-block-post"></div>
                   </div>
                   <div class="span1"></div>
               </div>

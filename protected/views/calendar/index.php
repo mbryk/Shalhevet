@@ -13,6 +13,7 @@
 		
 		$('#calendar').fullCalendar({
 			theme: true,
+                        weekMode: 'liquid',
 			header: {
 				left: 'prev,next today',
 				center: 'title',

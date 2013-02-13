@@ -23,7 +23,7 @@ class CalendarController extends Controller
             $events = Events::model()->since()->findAll();
             $js = '';
             foreach($events as $event){
-                $js.= '{title: \''. htmlspecialchars($event->name,ENT_QUOTES).'\',start: new Date('.(strtotime($event->start_time) * 1000).'),';
+                $js.= '{title: \''. addslashes($event->name).'\',start: new Date('.(strtotime($event->start_time) * 1000).'),';
                 if($event->end_time !== NULL) $js.='end: new Date('.(strtotime($event->end_time) * 1000).'),';
                 $js.= 'allDay:false,url: \'http://shalhevet.markbryk.in/calendar/event/'.$event->id.'\'},';
             }
