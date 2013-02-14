@@ -196,3 +196,9 @@ footer{
     float: left;
     overflow: hidden;
 }
+#hostModal.fade.in{
+    top:10px;
+}
+.host-modal{
+    max-height: 800px;
+}
