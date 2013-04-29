@@ -19,12 +19,6 @@ class People extends CActiveRecord
 	{
 		return 'people';
 	}
-        
-        public function behaviors()
-	{
-		return array(
-		);
-	}
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -88,5 +82,5 @@ class People extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}  
+	}
 }

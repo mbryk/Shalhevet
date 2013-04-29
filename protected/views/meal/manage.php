@@ -19,3 +19,21 @@
         </tr>
     </tbody>
 </table>
+
+
+<?php 
+if($dataProvider->totalItemCount !== 0):
+    $this->widget('bootstrap.widgets.TbGridView', array(
+    'type'=>'striped bordered condensed',
+    'dataProvider'=>$dataProvider,
+    'template'=>"{items}",
+    'columns'=>array(
+        array('name'=>'name', 'header'=>'Name'),
+        array('name'=>'email', 'header'=>'Email'),
+        array('name'=>'year', 'header'=>'Year'),
+        array(
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'htmlOptions'=>array('style'=>'width: 50px'),
+        ),
+    ),
+));endif; ?>

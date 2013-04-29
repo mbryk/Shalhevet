@@ -1,10 +1,7 @@
 <?php
 
-class Meals extends CActiveRecord
+class Shabbat extends CActiveRecord
 {
-    
-        public $choices;
-        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -20,7 +17,7 @@ class Meals extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'meals';
+		return 'shabbatot';
 	}
         
         public function behaviors()
@@ -37,11 +34,7 @@ class Meals extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('host,email, password,settings', 'required'),
-			array('limit', 'numerical', 'integerOnly'=>true),
-			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('id, host, email, password, date, settings, limit, signup_code, notes', 'safe', 'on'=>'search'),
+			array('id, date, total_matched', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,14 +56,8 @@ class Meals extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'host' => 'Name',
-			'email' => 'Email',
-			'password' => 'Password',
 			'date' => 'Shabbat',
-			'settings' => 'Settings',
-			'limit' => 'Limit',
-			'signup_code' => 'Signup Code',
-			'notes' => 'Notes',
+			'total_matched' => 'Total Matched',
 		);
 	}
 
@@ -86,26 +73,28 @@ class Meals extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('host',$this->host,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('date',$this->date,true);
-		$criteria->compare('settings',$this->settings,true);
-		$criteria->compare('limit',$this->limit,true);
-		$criteria->compare('signup_code',$this->signup_code,true);
-		$criteria->compare('notes',$this->notes,true);
+		$criteria->compare('total_matched',$this->total_matched,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}  
         
-        public function translateChoices($choices)
+        public function nextShabbat()
         {
-            $result = '100';
-            if(!$choices) return $result;
-            if(isset($choices['listed'])) $result[1] = '1'; //We don't currently give this option. Thus, the index does not exist. Perfect.
-            if(isset($choices['random'])) $result[2] = '1';
-            return $result;
+            $shabbat = $this->find();
+            if($shabbat->date< time())
+                $shabbat = $this->newShabbat($shabbat);
+            return $shabbat->id;
+        }
+        
+        public function newShabbat($last_shabbat)
+        {
+            $shabbat = new Shabbat();
+            $shabbat->date = $last_shabbat->date; //add one week to date
+            $shabbat->total_matched = 0;
+            if($shabbat->save())
+                return $shabbat;
         }
 }

@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Sign up for a meal!</h1>
+<h1 style="text-align: center" class="villa">Sign up for a meal!</h1>
 
 <div class="btn-group" style="width:600px; display:block; overflow: visible; margin: 40px auto">
     <a href="#hostModal" data-toggle="modal" class="btn btn-large btn-primary">I am hosting a meal this shabbat</a>
@@ -26,12 +26,12 @@
       
       <label class="checkbox" for="Meals_choices_0">
           <input name="Meals[choices][pick]" id="Meals_choices_0" value="1" checked="checked" type="checkbox" disabled="true">
-          Choose <a href="#" rel="tooltip" title="After signing up, you\'ll be shown a list of all the NYU students that need a meal this week. Feel free to invite any of them through the site. We\'ll shoot them an e-mail for you."><i class="icon-question-sign"></i></a>
+          Choose <a href="#" rel="tooltip" title="After signing up, you\'ll be shown a list of all the NYU students that need a meal this week. When you invite any of them on the site, we\'ll shoot them an e-mail for you."><i class="icon-question-sign"></i></a>
       </label>
-      <label class="checkbox" for="Meals_choices_1">
+      <!--<label class="checkbox" for="Meals_choices_1">
           <input name="Meals[choices][listed]" id="Meals_choices_1" value="1" type="checkbox">
           Be Chosen <a href="#" rel="tooltip" title="On the reverse side, if you check this box, students looking for a meal on the site will see your name on a list of hosts for this week. They can then ask you for an invite."><i class="icon-question-sign"></i></a>
-      </label>
+      </label>-->
       <label class="checkbox" for="Meals_choices_2">
           <input name="Meals[choices][random]" id="Meals_choices_2" value="1" type="checkbox">
           Let God Decide <a href="#" rel="tooltip" title="My favorite. If you check this box, if by Thursday night you haven\'t hit your limit, we\'ll throw you a few students who still need a meal. Any requests can be put in the notes below."><i class="icon-question-sign"></i></a>

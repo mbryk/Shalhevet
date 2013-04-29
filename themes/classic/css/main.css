@@ -146,9 +146,10 @@ h2.title{
 }
 .links-list li{
     padding:0;
+    overflow:hidden;
 }
 .links-list a{
-    color:#035a85;
+    color:#8963ec;
 }
 .links-list a:hover{
     color:graytext;
@@ -201,4 +202,11 @@ footer{
 }
 .host-modal{
     max-height: 800px;
+}
+
+@font-face { font-family: Villa; src: url('fonts/villa_didot.otf'); } 
+@font-face { font-family: Villa; src: url('fonts/villa_didot_black.otf'); } 
+@font-face { font-family: Villa; src: url('fonts/villa_didot_cutout.otf'); } 
+h1.villa{
+    font-family: Villa;
 }

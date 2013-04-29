@@ -24,9 +24,11 @@ class MealController extends Controller
             if(isset($_POST['Meals']))
             {
                 $meal->attributes = $_POST['Meals'];
+                $meal->notes = $_POST['Meals']['notes'];
                 $meal->settings = Meals::model()->translateChoices($_POST['Meals']['choices']);
-                $meal->save();
-                
+                $meal->date = Shabbat::model()->nextShabbat();
+                if($meal->save())
+                    $this->redirect(array('manage','meal'=>$meal->id));
             }
             $this->render('index', array('meal'=>$meal,'person'=>$person));
 	}
@@ -35,6 +37,12 @@ class MealController extends Controller
         {
             $meal = Meals::model()->findByPk($meal);
             if(empty($meal)) $this->redirect(array('index'));
-            $this->render('manage', array('meal'=>$meal));
+            $dataProvider=new CActiveDataProvider('Meals', array(
+                'criteria'=>array(
+                    'condition'=>'date=1', // =Shabbat::model()->nextShabbat()
+                    'order'=>'id DESC',
+                    ),
+                ));
+            $this->render('manage', array('meal'=>$meal,'dataProvider'=>$dataProvider));
         }
 }
